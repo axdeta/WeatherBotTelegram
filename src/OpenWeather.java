@@ -2,15 +2,23 @@ import Weather.WeatherModel;
 import com.google.gson.Gson;
 import org.telegram.telegrambots.meta.api.objects.Location;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 
 public class OpenWeather {
-    private final static String LINK_OPEN_WEATHER =
-            "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=metric,uk&APPID=f8921b454364cd5d513cfeb970011d5f";
+    private  static String LINK_OPEN_WEATHER =
+            "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=metric,uk&APPID=";
     private Gson gson = new Gson();
+
+    public OpenWeather() {
+        File file = new File("APPID");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            LINK_OPEN_WEATHER +=br.readLine();
+        } catch (IOException e) {
+            System.out.println("Open Weather APPID not found");
+        }
+    }
 
     public String getWeather(Location location) {
 
