@@ -3,6 +3,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.*;
+
 public class WeeatherTelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
@@ -40,6 +42,14 @@ public class WeeatherTelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "1253967624:AAHb29acz-y0oiu1CqSmpc32SzZ8M9Zl4iA";
+        File file = new File("tokenTelegram");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String result = br.readLine();
+            return result;
+        } catch (IOException e) {
+            System.out.println("Telegram token not found");
+        }
+        throw new RuntimeException();
     }
 }
